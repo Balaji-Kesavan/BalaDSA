@@ -7,6 +7,7 @@ def runningSum(nums):
     return result
 
 
+# Tests
 if __name__ == "__main__":
     # Example usage:
     input_nums = [5, 6, 7, 8]
