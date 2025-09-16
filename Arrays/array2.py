@@ -8,7 +8,7 @@ def runningSum(nums):
 
 
 if __name__ == "__main__":
-    # Example usage:
+
     input_nums = [5, 6, 7, 8]
     output_sum = runningSum(input_nums)
     print(f"The running sum of {input_nums} is {output_sum}")
