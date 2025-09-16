@@ -15,3 +15,5 @@ if __name__ == "__main__":
 
 # Answer :
 # The running sum of [1, 2, 3, 4] is [1, 3, 6, 10]
+#
+# test_sum
