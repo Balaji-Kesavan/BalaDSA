@@ -1,0 +1,81 @@
+import time
+import random
+from collections import Counter
+
+# Test input: 100,000 random integers in range [-10^9, 10^9]
+nums = [random.randint(-(10**9), 10**9) for _ in range(10**5)]
+
+# Insert a duplicate for testing
+nums.append(nums[0])
+
+
+def containsDuplicate_bruteforce(nums):
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nums[i] == nums[j]:
+                return True
+    return False
+
+
+def containsDuplicate_sorting(nums):
+    nums_sorted = sorted(nums)
+    for i in range(1, len(nums_sorted)):
+        if nums_sorted[i] == nums_sorted[i - 1]:
+            return True
+    return False
+
+
+def containsDuplicate_hashset(nums):
+    seen = set()
+    for num in nums:
+        if num in seen:
+            return True
+        seen.add(num)
+    return False
+
+
+def containsDuplicate_oneliner(nums):
+    return len(nums) != len(set(nums))
+
+
+def containsDuplicate_counter(nums):
+    counts = Counter(nums)
+    for val in counts.values():
+        if val > 1:
+            return True
+    return False
+
+
+# Benchmarking function
+def benchmark(func, nums):
+    start = time.time()
+    result = func(nums)
+    end = time.time()
+    return result, end - start
+
+
+# Running benchmarks
+results = {}
+functions = [
+    ("Sorting", containsDuplicate_sorting),
+    ("HashSet", containsDuplicate_hashset),
+    ("One-liner", containsDuplicate_oneliner),
+    ("Counter", containsDuplicate_counter),
+]
+
+# Brute force excluded since it's infeasible for 10^5 elements
+
+for name, func in functions:
+    res, duration = benchmark(func, nums)
+    results[name] = (res, duration)
+
+results
+
+"""
+{'Sorting': (True, 0.02257680892944336), 
+'HashSet': (True, 0.005220651626586914),
+ 'One-liner': (True, 0.008870601654052734), 
+ 'Counter': (True, 0.011696100234985352)}
+
+"""

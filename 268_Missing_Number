@@ -1,0 +1,70 @@
+import time
+import random
+
+# Prepare test data for n = 100,000 with one missing number
+n = 100_000
+nums = list(range(n + 1))
+missing = random.randint(0, n)
+nums.remove(missing)
+random.shuffle(nums)
+
+
+# Solutions
+def missingNumber_sorting(nums):
+    nums_sorted = sorted(nums)
+    for i in range(len(nums_sorted)):
+        if nums_sorted[i] != i:
+            return i
+    return len(nums_sorted)
+
+
+def missingNumber_hashset(nums):
+    num_set = set(nums)
+    for i in range(len(nums) + 1):
+        if i not in num_set:
+            return i
+
+
+def missingNumber_sum(nums):
+    n = len(nums)
+    expected_sum = n * (n + 1) // 2
+    actual_sum = sum(nums)
+    return expected_sum - actual_sum
+
+
+def missingNumber_xor(nums):
+    n = len(nums)
+    xor_all = 0
+    xor_nums = 0
+
+    for i in range(n + 1):
+        xor_all ^= i
+
+    for num in nums:
+        xor_nums ^= num
+
+    return xor_all ^ xor_nums
+
+
+# Benchmarking function
+def benchmark(func, nums):
+    start = time.time()
+    result = func(nums)
+    end = time.time()
+    return result, end - start
+
+
+# Run benchmarks
+results = {}
+functions = [
+    ("Sorting", missingNumber_sorting),
+    ("HashSet", missingNumber_hashset),
+    ("Summation", missingNumber_sum),
+    ("XOR", missingNumber_xor),
+]
+
+for name, func in functions:
+    res, duration = benchmark(func, nums)
+    results[name] = (res, duration)
+
+results, missing

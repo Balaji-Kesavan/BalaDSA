@@ -1,0 +1,11 @@
+"""
+Two Sum (HashMap approach)
+What it is:
+Given an array and a target sum, find two numbers that add up to the target.
+Brute force: O(n²) by checking all pairs.
+HashMap approach: Store seen numbers in a dictionary → O(n).
+Interview Tips:
+Always clarify if only one pair exists or multiple.
+Ask if array is sorted (binary search + two pointers works).
+Be ready to extend to 3Sum / 4Sum variants.
+"""
