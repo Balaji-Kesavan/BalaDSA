@@ -1,0 +1,54 @@
+import time
+import random
+
+# Prepare test data for n = 100,000 with duplicates to force missing numbers
+n = 100_000
+nums = [random.randint(1, n) for _ in range(n)]
+
+
+# Solutions
+# this is perfect one
+def findDisappearedNumbers_hashset(nums):
+    n = len(nums)
+    num_set = set(nums)
+    return [i for i in range(1, n + 1) if i not in num_set]
+
+
+def findDisappearedNumbers_marker(nums):
+    n = len(nums)
+    seen = [False] * (n + 1)
+    for num in nums:
+        seen[num] = True
+    return [i for i in range(1, n + 1) if not seen[i]]
+
+
+def findDisappearedNumbers_inplace(nums):
+    arr = nums[:]  # copy to avoid mutating test input
+    for num in arr:
+        idx = abs(num) - 1
+        if arr[idx] > 0:
+            arr[idx] = -arr[idx]
+    return [i + 1 for i in range(len(arr)) if arr[i] > 0]
+
+
+# Benchmarking function
+def benchmark(func, nums):
+    start = time.time()
+    result = func(nums)
+    end = time.time()
+    return len(result), end - start
+
+
+# Run benchmarks
+results = {}
+functions = [
+    ("HashSet", findDisappearedNumbers_hashset),
+    ("Marker Array", findDisappearedNumbers_marker),
+    ("In-Place", findDisappearedNumbers_inplace),
+]
+
+for name, func in functions:
+    res, duration = benchmark(func, nums)
+    results[name] = (res, duration)
+
+results
