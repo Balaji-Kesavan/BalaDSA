@@ -12,6 +12,9 @@ class Solution:
             nums_map[value] = index
         return []
 
+    def twoSumCheck(self, nums: List[int], target: int) -> List[int]:
+        nums_map = {}
+        return []
 
 if __name__ == "__main__":
     nums = [2, 7, 11, 15]
